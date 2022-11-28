@@ -1,4 +1,4 @@
-% Implementation of the algorithm
+%% Implementation of the algorithm
 % Given the set of points S
 S = readmatrix('../data/example1.dat');
 n = size(S, 1);
@@ -6,8 +6,24 @@ x_coord = S(:,1);
 y_coord = S(:,2);
 % Form the affinity matrix A
 A = zeros(n,n);
+sigma = 3;
 for i = 1:n
     for j = 1:n
-        j = i+1;
-    A_ij = exp(-norm(S[i]-S[j], 2)/(2*sigma^2))
+        A(i,j) = exp(-norm(S(i,:)-S(j,:), 2)/(2*sigma^2));
+        if  i == j
+            A(i,j) = 0;
+        end
+    end
 end
+%% Define D diagonal matrix
+D = zeros(n,n);
+for i = 1:n
+    for j = 1:n
+        if i == j
+        D(i,j) = sum(A(i,:));
+        end
+    end
+end
+
+% Construct matrix L
+L = sqrt(inv(D))*A*sqrt(inv(D))
