@@ -5,44 +5,51 @@ E = readmatrix('../data/example1.dat');
 col1 = E(:,1);
 col2 = E(:,2);
 max_ids = max(max(col1,col2));
-As= sparse(col1, col2, 1, max_ids, max_ids); 
-A = full(As);
+As= sparse(col1, col2, 1, max_ids, max_ids); % Computation of the adjacency matrix
+G = graph (As);
 
-A = adjacency(G);
+A = full(As); % To not have a sparse matrix
 
-[v,D] = eig(A);
-SD = sort(diag(D));
-figure(1)
-plot(SD)
-
-figure(1)
-imagesc(A)
-
-G = graph(A);
-figure(2)
-plot(G)
-
-%L = D-A;
+D = diag(sum(A,2));           %Diagonal matrix
 L = D^(-1/2)*A*D^(-1/2);
+Laplacian = D-A;
 
-[Vl,Dl] = eig(L);
-k=4;
-X = maxk(Vl,k)';
-%X = maxk(Vl,k);
+%[v,D] = eig(A);
+%SD = sort(diag(D));
+
+%figure(1)
+%plot(SD)
+
+%figure(1)
+%imagesc(A)
+
+K=4;
+
+%[Vl,Dl] = eig(L);
+%X = maxk(Vl,k)';
+
+[eigVecsK,eigValsK] = eigs(L,K,'largestreal');
+D = diag(eigValsK);
+
 %Y = normalize(X)';
-Y = zeros(241,k);
-for i = 1:241
-    for j = 1:k
-        Y(i,j) = X(i,j)/(sqrt(sum(X(i,:).^2)));
-    end
-end
+%Y = zeros(241,K);
+%for i = 1:241
+%    for j = 1:K
+%        %Y(i,j) = D(i,j)/(sqrt(sum(D(i,:).^2)));
+%        Y(i,j) = D(i,j)/sum(D(i,:).^2).^(1/2);
+%    end
+%end
 
-idx = kmeans(Y,4,'MaxIter',100);
+denom  =(sum( eigVecsK.^2,2)).^(1/2);
+%normalize
+Y = bsxfun(@rdivide,eigVecsK,denom);
+
+idx = kmeans(Y,4);
 %Sc = sort(idk);
 
 size(idx)
 idx;
-figure(3);
+figure(1);
 hold on;
 h = plot(G);
 highlight(h,find(idx==1),'NodeColor','r')
