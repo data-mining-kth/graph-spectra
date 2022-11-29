@@ -32,9 +32,7 @@ for i = 1:n
     end
 end
 % Construct matrix L, Laplacian matrix
-% L is symmetrically normalized Laplacian
-% it measures the extent to which a point
-% differs from its neighbors
+% 
 L = sqrt(inv(D))*A*sqrt(inv(D));
 %% Form the matrix X of max eigenvectors
 k = 10;
