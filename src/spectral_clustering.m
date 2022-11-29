@@ -23,6 +23,7 @@ end
 figure(1)
 imagesc(A)
 %% Define D diagonal matrix and build Laplacian
+% Degree matrix
 D = zeros(n,n);
 for i = 1:n
     for j = 1:n
@@ -39,5 +40,5 @@ L = sqrt(inv(D))*A*sqrt(inv(D));
 %% Form the matrix X of max eigenvectors
 k = 10;
 eig_vect = eig(A);
-figure()
-imagesc(A)
+figure(2)
+imagesc(L)
