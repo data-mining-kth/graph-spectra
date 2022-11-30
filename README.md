@@ -13,42 +13,57 @@ The basic idea behind the algorithm is to depart from the standard clustering ap
 ## Implementation
 
 For our implementation we used MATLAB and exploited its functions from the Statistics and Machine Learning Toolbox, e.g. `kmeans()`.
+The code is 
 
 ### First Graph
 
 Start by reading the data and creating the affinity matrix A.
 
 ```
-K=4; % Number of clusters
-
 E = readmatrix('../data/example1.dat');
+E = unique(E, "rows"); % Get the unique edge, no duplicates
 
-col1 = E(:,1);
-col2 = E(:,2);
-max_ids = max(max(col1,col2));
-As = sparse(col1, col2, 1, max_ids, max_ids); % Computation of the adjacency matrix
+vertex1 = E(:,1);
+vertex2 = E(:,2);
+max_ids = max(max(vertex1,vertex2)); % Get total number of vertices
+As = sparse(vertex1, vertex2, 1, max_ids, max_ids); % Computation of the adjacency matrix
+
 G = graph (As);
+```
+| Affinity matrix | Graph |
+| :---: | :---: |
+| <img src="./img/sparsity_matrix.png" alt="drawing" width="80%"/> | <img src="./img/graph.png" alt="drawing" width="80%"/> |
 
-A = full(As); % To not have a sparse matrix
+
+From the picture we deduce that there are actually four clusters as intended, thus we set our `K=4` to run the algorithm with k-means.
+What is Laplacian.
+What are eigenvectors.
+
+```
+K=4; % Number of clusters (deduced from the graph)
+
+A = full(As); % Not to have a sparse matrix
+D = diag(sum(A,2)); % Diagonal matrix algorithm
+L = D^(-1/2)*A*D^(-1/2); % Laplacian matrix
+[Vl,Dl] = eig(L); % Get eigenvectors and eigenvalues of L
 ```
 
-<img src="./img/.png" alt="drawing" width="50%"/>
+```
+code
+```
 
+| Clustered graph | Fiedler vector |
+| :---: | :---: |
+| <img src="./img/graph_clusters.png" alt="drawing" width="80%"/> | <img src="./img/fiedler_vector.png" alt="drawing" width="80%"/> |
 
 ### Second Graph
 
-Then do
+Change K to 2 and dataset.
 
 ```
-K=4; % Number of clusters
-
-E = readmatrix('../data/example1.dat');
-
-col1 = E(:,1);
-col2 = E(:,2);
-max_ids = max(max(col1,col2));
-As = sparse(col1, col2, 1, max_ids, max_ids); % Computation of the adjacency matrix
-G = graph (As);
-
-A = full(As); % To not have a sparse matrix
+E = readmatrix('../data/example2.dat');
+K=2; % Number of clusters (deduced from the graph)
 ```
+<img src="./img/graph_2.png" alt="drawing" width="50%"/>
+<img src="./img/graph_clusters_2.png" alt="drawing" width="50%"/>
+
