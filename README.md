@@ -6,8 +6,9 @@ The goal of this work is to implement a spectral graph clustering algorithm as t
 
 The basic idea behind the algorithm is to depart from the standard clustering approach based on generative models. We do apply k-means, but not directly to the data, instead, we apply it to the data mapped in Rk.
 
-[bad clustering applying k-means on data](./img/bad-cluster.png)
-[good clustering applying k-means on Y](./img/good-cluster.png)
+| Applying k-means directly to the dataset | Applying k-means after the algorithm implementation |
+| :---: | :---: |
+| <img src="./img/bad-cluster.png" alt="drawing" width="50%"/> | <img src="./img/good-cluster.png" alt="drawing" width="50%"/> |
 
 ## Implementation
 
