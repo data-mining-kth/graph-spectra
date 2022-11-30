@@ -37,7 +37,7 @@ G = graph (As);
 
 
 From the picture we deduce that there are actually four clusters as intended, thus we set our `K=4` to run the algorithm with k-means.
-At this point, we derive the Laplacian and, most importantly, its eigenvectors.
+At this point, we derive the Laplacian and, most importantly, its eigenvectors. This matrix is a normalized representation of the extent to which the vertices of the graph differ from their neighbors.
 
 ```
 K=4; % Number of clusters (deduced from the graph)
@@ -45,9 +45,11 @@ D = diag(sum(A,2)); % Diagonal matrix algorithm
 L = D^(-1/2)*A*D^(-1/2); % Laplacian matrix
 [Vl,Dl] = eig(L); % Get eigenvectors and eigenvalues of L
 ```
-The eigenvectors of L are used to compute the Fiedler vector.
+The eigenvectors of L are used to compute the Fiedler vector, corresponding to the second smallest eigenvalue of the Laplacian matrix and returning a representation of the transition between clusters.
+
+Secondly, we compute _Y_ by normalizing the matrix _X_ with k largest eigenvectors. By applying the function `kmeans()` we obrain a column vector of indeces numbered 1 to 4, representing element in row _i_ belonging to a specific cluster. The result is then plotted in the figure below.
+
 ```
-% Fiedler Vector is the vector corresponding to the second smallest eigenvalue of the Laplacian matrix, L
 fiedlerVec = Vl(:,2); 
 sorted_fielderVec = sort(fiedlerVec);
 figure;
@@ -86,6 +88,7 @@ K=2; % Number of clusters (deduced from the graph)
 | Affinity matrix | Graph |
 | :---: | :---: |
 | <img src="./img/sparsity_matrix_2.png" alt="drawing" width="80%"/> | <img src="./img/graph_2.png" alt="drawing" width="80%"/> |
+
 | Clustered graph | Fiedler vector |
 | :---: | :---: |
 | <img src="./img/graph_clusters_2.png" alt="drawing" width="80%"/> | <img src="./img/fiedler_vector_2.png" alt="drawing" width="80%"/> |
