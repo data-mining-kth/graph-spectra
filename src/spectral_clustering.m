@@ -1,8 +1,8 @@
 clear all;close all;clc;
 
-K=4; % Number of clusters
+K=2; % Number of clusters
 
-E = readmatrix('../data/example1.dat');
+E = readmatrix('../data/example2.dat');
 E = unique(E, "rows");
 
 col1 = E(:,1);
