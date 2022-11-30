@@ -13,11 +13,13 @@ The basic idea behind the algorithm is to depart from the standard clustering ap
 ## Implementation
 
 For our implementation we used MATLAB and exploited its functions from the Statistics and Machine Learning Toolbox, e.g. `kmeans()`.
-The code is 
+The code is in src/spectral_clustering.m folder.
 
 ### First Graph
 
-Start by reading the data and creating the affinity matrix A.
+The algoritm in the paper starts by creating the affinity matrix A, storing the affinity for each element compared to all others, computed as distance. As we already have our vertices and edges, we don't need to compute iteratively their distances, instead, since they are numbered edges, we can cast them in a matrix and set A(i,j) to 1 if elements i and j are connected, 0 otherwise. This operation is done by MATLAB with `sparse()`, and then `full()` to obtain the Affinity matrix A.
+
+When displayed, the matrix clearly shows four clusters, identified as close items. This matrix is then fed to `graph()` to display the draph in the table below.
 
 ```
 E = readmatrix('../data/example1.dat');
@@ -35,8 +37,7 @@ G = graph (As);
 
 
 From the picture we deduce that there are actually four clusters as intended, thus we set our `K=4` to run the algorithm with k-means.
-What is Laplacian.
-What are eigenvectors.
+At this point, we derive the Laplacian and, most importantly, its eigenvectors.
 
 ```
 K=4; % Number of clusters (deduced from the graph)
@@ -44,7 +45,7 @@ D = diag(sum(A,2)); % Diagonal matrix algorithm
 L = D^(-1/2)*A*D^(-1/2); % Laplacian matrix
 [Vl,Dl] = eig(L); % Get eigenvectors and eigenvalues of L
 ```
-
+The eigenvectors of L are used to compute the Fiedler vector.
 ```
 % Fiedler Vector is the vector corresponding to the second smallest eigenvalue of the Laplacian matrix, L
 fiedlerVec = Vl(:,2); 
@@ -75,7 +76,7 @@ highlight(h,find(idx==4),'NodeColor','green')
 
 ### Second Graph
 
-Change K to 2 and dataset.
+For the second, synthetic graph, the operations are the same of the algorithm above, except that we change K to 2 and the dataset.
 
 ```
 E = readmatrix('../data/example2.dat');
