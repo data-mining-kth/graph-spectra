@@ -82,6 +82,10 @@ For the second, synthetic graph, the operations are the same of the algorithm ab
 E = readmatrix('../data/example2.dat');
 K=2; % Number of clusters (deduced from the graph)
 ```
-<img src="./img/graph_2.png" alt="drawing" width="50%"/>
-<img src="./img/graph_clusters_2.png" alt="drawing" width="50%"/>
 
+| Affinity matrix | Graph |
+| :---: | :---: |
+| <img src="./img/sparsity_matrix_2.png" alt="drawing" width="80%"/> | <img src="./img/graph_2.png" alt="drawing" width="80%"/> |
+| Clustered graph | Fiedler vector |
+| :---: | :---: |
+| <img src="./img/graph_clusters_2.png" alt="drawing" width="80%"/> | <img src="./img/fiedler_vector_2.png" alt="drawing" width="80%"/> |
