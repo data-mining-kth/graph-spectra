@@ -47,7 +47,7 @@ L = D^(-1/2)*A*D^(-1/2); % Laplacian matrix
 ```
 The eigenvectors of L are used to compute the Fiedler vector, corresponding to the second smallest eigenvalue of the Laplacian matrix and returning a representation of the transition between clusters.
 
-Secondly, we compute _Y_ by normalizing the matrix _X_ with k largest eigenvectors. By applying the function `kmeans()` we obrain a column vector of indeces numbered 1 to 4, representing element in row _i_ belonging to a specific cluster. The result is then plotted in the figure below.
+Secondly, we compute _Y_ by normalizing the matrix _X_ with k largest eigenvectors. By applying the function `kmeans()` we obtain a column vector of indeces numbered 1 to 4, representing element in row _i_ belonging to a specific cluster. The result is then plotted in the figure below.
 
 ```
 fiedlerVec = Vl(:,2); 
