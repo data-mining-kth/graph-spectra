@@ -19,7 +19,7 @@ The code is in src/spectral_clustering.m folder.
 
 The algoritm in the paper starts by creating the affinity matrix A, storing the affinity for each element compared to all others, computed as distance. As we already have our vertices and edges, we don't need to compute iteratively their distances, instead, since they are numbered edges, we can cast them in a matrix and set A(i,j) to 1 if elements i and j are connected, 0 otherwise. This operation is done by MATLAB with `sparse()`, and then `full()` to obtain the Affinity matrix A.
 
-When displayed, the matrix clearly shows four clusters, identified as close items. This matrix is then fed to `graph()` to display the draph in the table below.
+When displayed, the matrix clearly shows four clusters, identified as close items. This matrix is then fed to `graph()` to display the graph in the table below.
 
 ```
 E = readmatrix('../data/example1.dat');
